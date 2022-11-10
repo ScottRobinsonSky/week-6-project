@@ -7,7 +7,7 @@ const Show = db.define("shows", {
     genre: DataTypes.ENUM("Comedy", "Drama", "Horror", "Sitcom"),
     rating: DataTypes.INTEGER,
     status: DataTypes.STRING,
-});
+}, {timestamps: false});
 
 //exports
 module.exports = { Show }

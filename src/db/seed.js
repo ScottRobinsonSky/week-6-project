@@ -14,12 +14,12 @@ async function getJSONFromFile(filepath) {
 
 async function seedShows() {
     const showData = await getJSONFromFile(path.join(__dirname, '../data/shows.json'));
-    await Show.bulkCreate(showData);
+    return (await Show.bulkCreate(showData)).map(s => s.toJSON());
 }
 
 async function seedUsers() {
     const userData = await getJSONFromFile(path.join(__dirname, '../data/users.json'));
-    await User.bulkCreate(userData);
+    return (await User.bulkCreate(userData)).map(u => u.toJSON());
 }
 
 //write our seed function -> take our json file, create rows with our data into it

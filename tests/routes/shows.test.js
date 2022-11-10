@@ -85,6 +85,25 @@ describe("Testing /shows endpoint route", () => {
         });
     });
 
+    describe("GET /shows/genres", () => {
+        test("succeeds", async () => {
+            const { statusCode } = await request(app).get("/shows/genres");
+            expect(statusCode).toBe(200);
+        });
+
+        test("responds with application/json", async () => {
+            const { headers } = await request(app).get("/shows/genres");
+            expect(headers["content-type"]).toMatch("application/json");
+        });
+
+        test("responds with all show genres", async () => {
+            const actualGenres = Show.getAttributes().genre.values;
+
+            const { body } = await request(app).get("/shows/genres");
+            expect(body).toEqual(actualGenres);
+        });
+    });
+
     describe("GET /shows/genres/:genre", () => {
         describe("with a valid genre", () => {
             const genres = Show.getAttributes().genre.values;

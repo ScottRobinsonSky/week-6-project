@@ -5,8 +5,12 @@ const { Show } = require("../models");
 const showRouter = Router();
 
 
-showRouter.get("/", async (req, resp) => {
+showRouter.get("/", async (_, resp) => {
     resp.json(await Show.findAll());
+});
+
+showRouter.get("/genres", async (_, resp) => {
+    resp.json(Show.getAttributes().genre.values);
 });
 
 showRouter.get("/:id", validateShowId, async (req, resp) => {

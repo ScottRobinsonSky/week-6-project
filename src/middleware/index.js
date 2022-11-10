@@ -20,7 +20,7 @@ async function validateShowId(req, resp, next) {
     }
     req.show = await Show.findByPk(+req.params.id);
     if (req.show === null) {
-        resp.status(404).send("Show Now Found");
+        resp.status(404).send("Show Not Found");
         return;
     }
     next();

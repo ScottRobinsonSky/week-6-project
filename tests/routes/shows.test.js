@@ -1,18 +1,15 @@
 const request = require("supertest");
 const { db } = require("../../src/db/db");
-const { seedShows, seedshows, seedUsers } = require('../../src/db/seed');
+const { seedShows } = require('../../src/db/seed');
 const { Show } = require("../../src/models");
 const app = require("../../src/server");
 
 describe("Testing /shows endpoint route", () => {
-    let rawShows, shows, rawUsers, users;
+    let rawShows, shows;
     beforeAll(async () => {
         await db.sync({force: true});
         rawShows = await seedShows();
         shows = rawShows.map(s => s.toJSON());
-        
-        rawUsers = await seedUsers();
-        users = rawUsers.map(u => u.toJSON());
     });
 
     describe("GET /shows/", () => {
@@ -44,7 +41,7 @@ describe("Testing /shows endpoint route", () => {
                 expect(headers["content-type"]).toMatch("application/json");
             });
 
-            test("responds with the specified user", async () => {
+            test("responds with the specified show", async () => {
                 const { body } = await request(app).get(`/shows/${shows[0].id}`);
                 expect(body).toEqual(shows[0]);
             });

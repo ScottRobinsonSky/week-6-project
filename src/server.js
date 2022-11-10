@@ -1,5 +1,5 @@
 const express = require("express");
-const seed = require("./db/seed");
+const { seed } = require("./db/seed");
 const showRouter = require("./routes/shows");
 const userRouter = require("./routes/users");
 

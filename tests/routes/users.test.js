@@ -7,9 +7,11 @@ const { Show, User } = require("../../src/models");
 const app = require("../../src/server");
 
 describe("Testing /users endpoint route", () => {
+    let users;
     beforeAll(async () => {
         await db.sync({force: true});
         await seedShows();
+        users = await seedUsers();
     });
 
     describe("GET /users/", () => {
@@ -24,20 +26,12 @@ describe("Testing /users endpoint route", () => {
         });
 
         test("responds with all users", async () => {
-            await User.destroy({truncate: true}); // empty users table so it's only our data inside
-            const users = await seedUsers();
-
             const { body } = await request(app).get("/users/");
             expect(body).toEqual(users);
         });
     });
 
     describe("GET /users/:id", () => {
-        let users;
-        beforeAll(async () => {
-            await User.destroy({truncate: true}); // empty users table so it's only our data inside
-            users = await seedUsers();
-        });
         describe("with a known id", () => {
             test("succeeds", async () => {
                 const { statusCode } = await request(app).get(`/users/${users[0].id}`);

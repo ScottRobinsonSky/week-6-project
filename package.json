@@ -5,6 +5,9 @@
   "main": "db.js",
   "scripts": {
     "test": "jest",
+    "test:routes": "jest tests/routes",
+    "test:routes:shows": "jest tests/routes/shows.test.js",
+    "test:routes:users": "jest tests/routes/users.test.js",
     "start": "nodemon src/server.js"
   },
   "author": "",

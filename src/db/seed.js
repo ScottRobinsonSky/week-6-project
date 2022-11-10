@@ -14,12 +14,12 @@ async function getJSONFromFile(filepath) {
 
 async function seedShows() {
     const showData = await getJSONFromFile(path.join(__dirname, '../data/shows.json'));
-    return (await Show.bulkCreate(showData)).map(s => s.toJSON());
+    return await Show.bulkCreate(showData);
 }
 
 async function seedUsers() {
     const userData = await getJSONFromFile(path.join(__dirname, '../data/users.json'));
-    return (await User.bulkCreate(userData)).map(u => u.toJSON());
+    return await User.bulkCreate(userData);
 }
 
 async function seedUsersShows() {

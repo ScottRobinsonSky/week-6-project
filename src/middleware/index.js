@@ -1,10 +1,6 @@
 const { Show, User } = require("../models");
 
 async function validateShowGenre(req, resp, next) {
-    if (req.params.genre === undefined) {
-        resp.status(400).send("Genre is a missing required argument");
-        return;
-    }
     const genres = Show.getAttributes().genre.values.map(genre => genre.toLowerCase());
     if (!genres.includes(req.params.genre.toLowerCase())) {
         resp.status(404).send("Genre Not Found");   

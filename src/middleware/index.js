@@ -11,7 +11,6 @@ async function validateShowGenre(req, resp, next) {
         return;
     }
     next();
-
 }
 
 async function validateShowId(req, resp, next) {

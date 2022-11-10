@@ -86,7 +86,7 @@ describe("Testing /users endpoint route", () => {
             test("responds with 'User id must be a valid integer' message", async () => {
                 const { text } = await request(app).get("/users/foo");
                 expect(text).toBe("User id must be a valid integer.");
-            })
-        })
-    })
+            });
+        });
+    });
 });

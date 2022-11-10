@@ -35,5 +35,4 @@ async function validateUserId(req, resp, next) {
     next();
 }
 
-
 module.exports = { validateShowGenre, validateShowId, validateUserId };

@@ -1,5 +1,5 @@
 //import our db, Model, DataTypes
-const { db, DataTypes } = require('../db/db')
+const { db, DataTypes } = require('../db/db');
 
 //Creating a User child class from the Model parent class
 const User = db.define("users", {
@@ -8,4 +8,4 @@ const User = db.define("users", {
 }, {timestamps: false});
 
 //exports
-module.exports = { User }
+module.exports = { User };

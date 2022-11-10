@@ -49,4 +49,4 @@ const seed = async () => {
 }
 
 // export seed functions
-module.exports = { seed, seedShows, seedUsers };
+module.exports = { seed, seedShows, seedUsers, seedUsersShows };

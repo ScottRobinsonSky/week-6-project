@@ -5,6 +5,7 @@
   "main": "db.js",
   "scripts": {
     "test": "jest --coverage",
+    "test:db": "jest tests/db", 
     "test:routes": "jest tests/routes",
     "test:routes:shows": "jest tests/routes/shows.test.js",
     "test:routes:users": "jest tests/routes/users.test.js",

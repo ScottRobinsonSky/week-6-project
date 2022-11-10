@@ -107,34 +107,34 @@ describe("Testing /users endpoint route", () => {
 
         describe("with an unknown id", () => {
             test("fails with a 404 Not Found", async () => {
-                const { statusCode } = await request(app).get("/users/0"); // 0 is never a valid id since they start at 1
+                const { statusCode } = await request(app).get("/users/0/shows"); // 0 is never a valid id since they start at 1
                 expect(statusCode).toBe(404);
             });
 
             test("responds with text/html", async () => {
-                const { headers } = await request(app).get("/users/0");
+                const { headers } = await request(app).get("/users/0/shows");
                 expect(headers["content-type"]).toMatch("text/html");
             });
 
             test("responds with 'User Not Found' message", async () => {
-                const { text } = await request(app).get("/users/0");
+                const { text } = await request(app).get("/users/0/shows");
                 expect(text).toBe("User Not Found");
             });
         });
 
         describe("with an invalid id", () => {
             test("fails with a 400 Bad Request", async () => {
-                const { statusCode } = await request(app).get("/users/foo");
+                const { statusCode } = await request(app).get("/users/foo/shows");
                 expect(statusCode).toBe(400);
             });
 
             test("responds with text/html", async () => {
-                const { headers } = await request(app).get("/users/foo");
+                const { headers } = await request(app).get("/users/foo/shows");
                 expect(headers["content-type"]).toMatch("text/html");
             });
 
             test("responds with 'User id must be a valid integer' message", async () => {
-                const { text } = await request(app).get("/users/foo");
+                const { text } = await request(app).get("/users/foo/shows");
                 expect(text).toBe("User id must be a valid integer.");
             });
         });

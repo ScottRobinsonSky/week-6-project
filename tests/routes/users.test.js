@@ -1,9 +1,6 @@
-const fs = require('fs').promises;
-const path = require('path');
 const request = require("supertest");
 const { db } = require("../../src/db/db");
 const { seedShows, seedUsers } = require('../../src/db/seed');
-const { Show, User } = require("../../src/models");
 const app = require("../../src/server");
 
 describe("Testing /users endpoint route", () => {

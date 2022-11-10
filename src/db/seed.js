@@ -22,12 +22,28 @@ async function seedUsers() {
     return (await User.bulkCreate(userData)).map(u => u.toJSON());
 }
 
+async function seedUsersShows() {
+    let users = await User.findAll();
+    if (users.length === 0) {
+        users = await seedUsers();
+    }
+
+    let shows = await Show.findAll();
+    if (shows.length === 0) {
+        shows = await seedShows();
+    }
+
+    await users[0].addShows([shows[0].id, shows[1].id, shows[3].id, shows[9].id]);
+    await users[1].addShows([shows[3].id, shows[7].id, shows[8].id, shows[10].id]);
+}
+
 //write our seed function -> take our json file, create rows with our data into it
 const seed = async () => {
     await db.sync({ force: true }); // clear out database + tables
 
     await seedShows();
     await seedUsers();
+    await seedUsersShows();
 
     console.log("Shows and User database info populated!")
 }

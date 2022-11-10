@@ -1,10 +1,11 @@
 // imports
 const { Sequelize, DataTypes } = require('sequelize')
+const path = require("path");
 
 //create an instance of the database call it db
-const db = new Sequelize('database', 'username', 'password', {
+const db = new Sequelize({
     dialect: 'sqlite',
-    storage: './movie_watchlist.sqlite',
+    storage: path.join(__dirname, '/movie_watchlist.sqlite'),
     logging: false
 })
 

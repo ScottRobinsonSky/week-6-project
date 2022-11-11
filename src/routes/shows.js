@@ -13,7 +13,7 @@ showRouter.get("/genres", async (_, resp) => {
     resp.json(Show.getAttributes().genre.values);
 });
 
-showRouter.get("/:id", validateShowId, async (req, resp) => {
+showRouter.get("/:showId", validateShowId, async (req, resp) => {
     resp.json(req.show.toJSON());
 });
 

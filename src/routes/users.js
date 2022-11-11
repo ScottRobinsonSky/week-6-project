@@ -8,11 +8,11 @@ userRouter.get("/", async (_, resp) => {
     resp.json(await User.findAll());
 });
 
-userRouter.get("/:id", validateUserId, async (req, resp) => {
+userRouter.get("/:userId", validateUserId, async (req, resp) => {
     resp.json(req.user.toJSON());
 });
 
-userRouter.get("/:id/shows", validateUserId, async (req, resp) => {
+userRouter.get("/:userId/shows", validateUserId, async (req, resp) => {
     resp.json(await req.user.getShows());
 });
 

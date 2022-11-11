@@ -17,15 +17,15 @@ describe("Testing /shows endpoint route", () => {
             resp = await request(app).get("/shows/");
         });
 
-        test("succeeds", async () => {
+        test("succeeds", () => {
             expect(resp.statusCode).toBe(200);
         });
 
-        test("responds with application/json", async () => {
+        test("responds with application/json", () => {
             expect(resp.headers["content-type"]).toMatch("application/json");
         });
 
-        test("responds with all shows", async () => {
+        test("responds with all shows", () => {
             expect(resp.body).toEqual(shows);
         });
     });
@@ -36,15 +36,15 @@ describe("Testing /shows endpoint route", () => {
                 resp = await request(app).get(`/shows/${shows[0].id}`);
             });
 
-            test("succeeds", async () => {
+            test("succeeds", () => {
                 expect(resp.statusCode).toBe(200);
             });
 
-            test("responds with application/json", async () => {
+            test("responds with application/json", () => {
                 expect(resp.headers["content-type"]).toMatch("application/json");
             });
 
-            test("responds with the specified show", async () => {
+            test("responds with the specified show", () => {
                 expect(resp.body).toEqual(shows[0]);
             });
         });
@@ -54,15 +54,15 @@ describe("Testing /shows endpoint route", () => {
                 resp = await request(app).get("/shows/0");
             });
 
-            test("fails with a 404 Not Found", async () => {
+            test("fails with a 404 Not Found", () => {
                 expect(resp.statusCode).toBe(404);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'Show Not Found' message", async () => {
+            test("responds with 'Show Not Found' message", () => {
                 expect(resp.text).toBe("Show Not Found");
             });
         });
@@ -72,15 +72,15 @@ describe("Testing /shows endpoint route", () => {
                 resp = await request(app).get("/shows/foo");
             });
 
-            test("fails with a 400 Bad Request", async () => {
+            test("fails with a 400 Bad Request", () => {
                 expect(resp.statusCode).toBe(400);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'Show id must be a valid integer' message", async () => {
+            test("responds with 'Show id must be a valid integer' message", () => {
                 expect(resp.text).toBe("Show id must be a valid integer.");
             });
         });
@@ -434,15 +434,15 @@ describe("Testing /shows endpoint route", () => {
             resp = await request(app).get("/shows/genres");
         });
 
-        test("succeeds", async () => {
+        test("succeeds", () => {
             expect(resp.statusCode).toBe(200);
         });
 
-        test("responds with application/json", async () => {
+        test("responds with application/json", () => {
             expect(resp.headers["content-type"]).toMatch("application/json");
         });
 
-        test("responds with all show genres", async () => {
+        test("responds with all show genres", () => {
             const actualGenres = Show.getAttributes().genre.values;
             expect(resp.body).toEqual(actualGenres);
         });
@@ -458,15 +458,15 @@ describe("Testing /shows endpoint route", () => {
                     resp = await request(app).get(`/shows/genres/${genre}`);
                 })
 
-                test("succeeds", async () => {
+                test("succeeds", () => {
                     expect(resp.statusCode).toBe(200);
                 });
 
-                test("responds with application/json", async () => {
+                test("responds with application/json", () => {
                     expect(resp.headers["content-type"]).toMatch("application/json");
                 });
 
-                test("responds with all shows matching the genre", async () => {
+                test("responds with all shows matching the genre", () => {
                     const matchingShows = shows.filter(s => s.genre === genre);
                     expect(resp.body).toEqual(matchingShows.map(s => expect.objectContaining(s)));
                 });
@@ -478,15 +478,15 @@ describe("Testing /shows endpoint route", () => {
                     resp = await request(app).get(`/shows/genres/${genre}`);
                 });
 
-                test("succeeds", async () => {
+                test("succeeds", () => {
                     expect(resp.statusCode).toBe(200);
                 });
 
-                test("responds with application/json", async () => {
+                test("responds with application/json", () => {
                     expect(resp.headers["content-type"]).toMatch("application/json");
                 });
 
-                test("responds with all shows matching the genre", async () => {
+                test("responds with all shows matching the genre", () => {
                     const matchingShows = shows.filter(s => s.genre.toLowerCase() === genre.toLowerCase());
                     expect(resp.body).toEqual(matchingShows.map(s => expect.objectContaining(s)));
                 });
@@ -498,15 +498,15 @@ describe("Testing /shows endpoint route", () => {
                 resp = await request(app).get("/shows/genres/foo");
             });
 
-            test("fails with a 404 Not Found", async () => {
+            test("fails with a 404 Not Found", () => {
                 expect(resp.statusCode).toBe(404);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'Genre Not Found' message", async () => {
+            test("responds with 'Genre Not Found' message", () => {
                 expect(resp.text).toBe("Genre Not Found");
             });
         });

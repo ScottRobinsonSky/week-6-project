@@ -19,15 +19,15 @@ describe("Testing /users endpoint route", () => {
             resp = await request(app).get("/users/");
         });
 
-        test("succeeds", async () => {
+        test("succeeds", () => {
             expect(resp.statusCode).toBe(200);
         });
 
-        test("responds with application/json", async () => {
+        test("responds with application/json", () => {
             expect(resp.headers["content-type"]).toMatch("application/json");
         });
 
-        test("responds with all users", async () => {
+        test("responds with all users", () => {
             expect(resp.body).toEqual(users);
         });
     });
@@ -38,15 +38,15 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).get(`/users/${users[0].id}`);
             });
 
-            test("succeeds", async () => {
+            test("succeeds", () => {
                 expect(resp.statusCode).toBe(200);
             });
 
-            test("responds with application/json", async () => {
+            test("responds with application/json", () => {
                 expect(resp.headers["content-type"]).toMatch("application/json");
             });
 
-            test("responds with the specified user", async () => {
+            test("responds with the specified user", () => {
                 expect(resp.body).toEqual(users[0]);
             });
         });
@@ -56,15 +56,15 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).get("/users/0");
             });
 
-            test("fails with a 404 Not Found", async () => {
+            test("fails with a 404 Not Found", () => {
                 expect(resp.statusCode).toBe(404);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'User Not Found' message", async () => {
+            test("responds with 'User Not Found' message", () => {
                 expect(resp.text).toBe("User Not Found");
             });
         });
@@ -74,15 +74,15 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).get("/users/foo");
             });
 
-            test("fails with a 400 Bad Request", async () => {
+            test("fails with a 400 Bad Request", () => {
                 expect(resp.statusCode).toBe(400);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'User id must be a valid integer' message", async () => {
+            test("responds with 'User id must be a valid integer' message", () => {
                 expect(resp.text).toBe("User id must be a valid integer.");
             });
         });
@@ -95,15 +95,15 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).get(`/users/${users[0].id}/shows`);
             });
 
-            test("succeeds", async () => {
+            test("succeeds", () => {
                 expect(resp.statusCode).toBe(200);
             });
 
-            test("responds with application/json", async () => {
+            test("responds with application/json", () => {
                 expect(resp.headers["content-type"]).toMatch("application/json");
             });
 
-            test("responds with the specified user's shows", async () => {
+            test("responds with the specified user's shows", () => {
                 expect(resp.body).toEqual([expect.objectContaining(shows[0]), expect.objectContaining(shows[2])]);
             });
         });
@@ -113,15 +113,15 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).get("/users/0/shows");
             });
 
-            test("fails with a 404 Not Found", async () => {
+            test("fails with a 404 Not Found", () => {
                 expect(resp.statusCode).toBe(404);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'User Not Found' message", async () => {
+            test("responds with 'User Not Found' message", () => {
                 expect(resp.text).toBe("User Not Found");
             });
         });
@@ -131,15 +131,15 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).get("/users/foo/shows");
             });
 
-            test("fails with a 400 Bad Request", async () => {
+            test("fails with a 400 Bad Request", () => {
                 expect(resp.statusCode).toBe(400);
             });
 
-            test("responds with text/html", async () => {
+            test("responds with text/html", () => {
                 expect(resp.headers["content-type"]).toMatch("text/html");
             });
 
-            test("responds with 'User id must be a valid integer' message", async () => {
+            test("responds with 'User id must be a valid integer' message", () => {
                 expect(resp.text).toBe("User id must be a valid integer.");
             });
         });

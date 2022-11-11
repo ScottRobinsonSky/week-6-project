@@ -88,6 +88,71 @@ describe("Testing /users endpoint route", () => {
         });
     });
 
+    describe("DELETE /users/:userId", () => {
+        describe("with valid userId", () => {
+            beforeAll(async () => {
+                resp = await request(app).delete(`/users/${users[0].id}`);
+            });
+
+            afterAll(async () => {
+                // Undo any changes made by the test
+                await db.sync({force: true});
+                await seedUsers();
+                await seedShows(); // shows is needed in below tests (e.g. PATCH)
+            });
+
+            test("suceeds", () => {
+                expect(resp.statusCode).toBe(200);
+            });
+
+            test("responds with application/json", () => {
+                expect(resp.headers["content-type"]).toMatch("application/json");
+            });
+
+            test("responds with the deleted user", () => {
+                expect(resp.body).toEqual(users[0]);
+            });
+        });
+
+        describe("with unknown/invalid userId", () => {
+            describe("unknown id", () => {
+                beforeAll(async () => {
+                    resp = await request(app).delete("/users/0");
+                });
+
+                test("fails with 404 Not Found", () => {
+                    expect(resp.statusCode).toBe(404);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'User Not Found' message", () => {
+                    expect(resp.text).toBe("User Not Found");
+                });
+            });
+
+            describe("invalid id", () => {
+                beforeAll(async () => {
+                    resp = await request(app).delete("/users/foo");
+                });
+
+                test("fails with 400 Bad Request", () => {
+                    expect(resp.statusCode).toBe(400);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'User id must be a valid integer' message", () => {
+                    expect(resp.text).toBe("User id must be a valid integer.");
+                });
+            });
+        });
+    });
+
     describe("GET /users/:id/shows", () => {
         describe("with a known id", () => {
             beforeAll(async () => {

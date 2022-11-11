@@ -86,6 +86,70 @@ describe("Testing /shows endpoint route", () => {
         });
     });
 
+    describe("DELETE /shows/:showId", () => {
+        describe("with valid showId", () => {
+            beforeAll(async () => {
+                resp = await request(app).delete(`/shows/${shows[0].id}`);
+            });
+
+            afterAll(async () => {
+                // Undo any changes made by the test
+                await db.sync({force: true});
+                await seedShows();
+            });
+
+            test("suceeds", () => {
+                expect(resp.statusCode).toBe(200);
+            });
+
+            test("responds with application/json", () => {
+                expect(resp.headers["content-type"]).toMatch("application/json");
+            });
+
+            test("responds with the deleted show", () => {
+                expect(resp.body).toEqual(shows[0]);
+            });
+        });
+
+        describe("with unknown/invalid showId", () => {
+            describe("unknown id", () => {
+                beforeAll(async () => {
+                    resp = await request(app).delete("/shows/0");
+                });
+
+                test("fails with 404 Not Found", () => {
+                    expect(resp.statusCode).toBe(404);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'Show Not Found' message", () => {
+                    expect(resp.text).toBe("Show Not Found");
+                });
+            });
+
+            describe("invalid id", () => {
+                beforeAll(async () => {
+                    resp = await request(app).delete("/shows/foo");
+                });
+
+                test("fails with 400 Bad Request", () => {
+                    expect(resp.statusCode).toBe(400);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'Show id must be a valid integer' message", () => {
+                    expect(resp.text).toBe("Show id must be a valid integer.");
+                });
+            });
+        });
+    });
+
     describe("PATCH /shows/:showId", () => {
         describe("with valid showId", () => {
             afterEach(async () => {

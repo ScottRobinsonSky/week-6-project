@@ -54,7 +54,7 @@ showRouter.patch(
         if (req.body.status !== undefined) {
             toUpdate["status"] = req.body.status;
         }
-        if (toUpdate.length !== 0) {
+        if (Object.keys(toUpdate).length !== 0) {
             await req.show.update(toUpdate);
         }
         resp.json(toUpdate);

@@ -18,7 +18,7 @@ userRouter.get("/:userId/shows", validateUserId, async (req, resp) => {
 
 userRouter.patch("/:userId/shows/:showId", validateUserId, validateShowId, async (req, resp) => {
     await req.user.addShow(req.show);
-    resp.sendStatus(200);
+    resp.json(req.show);
 });
 
 module.exports = userRouter;

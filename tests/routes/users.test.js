@@ -144,4 +144,107 @@ describe("Testing /users endpoint route", () => {
             });
         });
     });
+
+    describe("PATCH /users/:userId/shows/:showId", () => {
+        describe("with valid parameters", () => {
+            beforeAll(async () => {
+                resp = await request(app).patch(`/users/${users[0].id}/shows/${shows[0].id}`);
+            });
+
+            afterEach(async () => {
+                // Undo any changes made by the test
+                await db.sync({force: true});
+                await seedShows();
+                await seedUsers();
+            });    
+
+            test("succeeds", () => {
+                expect(resp.statusCode).toBe(200);
+            });
+
+            test("responds with application/json", () => {
+                expect(resp.headers["content-type"]).toMatch("application/json");
+            });
+
+            test("responds with the show added to user", () => {
+                expect(resp.body).toEqual(shows[0]);
+            });
+        });
+
+        describe("with valid userId but unknown/invalid showId", () => {
+            describe("unknown showId", () => {
+                beforeAll(async () => {
+                    resp = await request(app).patch(`/users/${users[0].id}/shows/0`);
+                });
+
+                test("fails with 404 Not Found", () => {
+                    expect(resp.statusCode).toBe(404);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'Show Not Found' message", () => {
+                    expect(resp.text).toBe("Show Not Found");
+                });
+            });
+
+            describe("invalid showId", () => {
+                beforeAll(async () => {
+                    resp = await request(app).patch(`/users/${users[0].id}/shows/foo`);
+                });
+
+                test("fails with 400 Bad Request", () => {
+                    expect(resp.statusCode).toBe(400);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'Show id must be a valid integer' message", () => {
+                    expect(resp.text).toBe("Show id must be a valid integer.");
+                });
+            });
+        });
+
+        describe("with unknown/invalid userId but valid showId", () => {
+            describe("unknown userId", () => {
+                beforeAll(async () => {
+                    resp = await request(app).patch(`/users/0/shows/${shows[0].id}`);
+                });
+
+                test("fails with 404 Not Found", () => {
+                    expect(resp.statusCode).toBe(404);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'User Not Found' message", () => {
+                    expect(resp.text).toBe("User Not Found");
+                });
+            });
+
+            describe("invalid userId", () => {
+                beforeAll(async () => {
+                    resp = await request(app).patch(`/users/foo/shows/${shows[9].id}`);
+                });
+
+                test("fails with 400 Bad Request", () => {
+                    expect(resp.statusCode).toBe(400);
+                });
+
+                test("responds with text/html", () => {
+                    expect(resp.headers["content-type"]).toMatch("text/html");
+                });
+
+                test("responds with 'User id must be a valid integer' message", () => {
+                    expect(resp.text).toBe("User id must be a valid integer.");
+                });
+            });
+        });
+    });
 });

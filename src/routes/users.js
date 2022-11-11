@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { validateUserId } = require("../middleware");
+const { validateShowId, validateUserId } = require("../middleware");
 const { User } = require("../models");
 const userRouter = Router();
 
@@ -14,6 +14,11 @@ userRouter.get("/:userId", validateUserId, async (req, resp) => {
 
 userRouter.get("/:userId/shows", validateUserId, async (req, resp) => {
     resp.json(await req.user.getShows());
+});
+
+userRouter.patch("/:userId/shows/:showId", validateUserId, validateShowId, async (req, resp) => {
+    await req.user.addShow(req.show);
+    resp.sendStatus(200);
 });
 
 module.exports = userRouter;

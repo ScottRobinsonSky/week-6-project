@@ -12,6 +12,11 @@ userRouter.get("/:userId", validateUserId, async (req, resp) => {
     resp.json(req.user.toJSON());
 });
 
+userRouter.delete("/:userId", validateUserId, async (req, resp) => {
+    await req.user.destroy();
+    resp.json(req.user);
+});
+
 userRouter.get("/:userId/shows", validateUserId, async (req, resp) => {
     resp.json(await req.user.getShows());
 });

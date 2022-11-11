@@ -151,7 +151,7 @@ describe("Testing /users endpoint route", () => {
                 resp = await request(app).patch(`/users/${users[0].id}/shows/${shows[0].id}`);
             });
 
-            afterEach(async () => {
+            afterAll(async () => {
                 // Undo any changes made by the test
                 await db.sync({force: true});
                 await seedShows();

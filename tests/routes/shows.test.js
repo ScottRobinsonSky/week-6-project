@@ -152,11 +152,6 @@ describe("Testing /shows endpoint route", () => {
 
     describe("PATCH /shows/:showId", () => {
         describe("with valid showId", () => {
-            afterEach(async () => {
-                // Undo any changes made by the test
-                await db.sync({force: true});
-                await seedShows();
-            });
             describe("updating nothing", () => {
                 beforeAll(async () => {
                     resp = await request(app).patch(`/shows/${shows[0].id}`).send({});
@@ -182,6 +177,12 @@ describe("Testing /shows endpoint route", () => {
                         resp = await request(app)
                             .patch(`/shows/${shows[0].id}`)
                             .send({rating: newRating});
+                    });
+
+                    afterAll(async () => {
+                        // Undo any changes made by the test
+                        await db.sync({force: true});
+                        await seedShows();
                     });
 
                     test("succeeds", () => {
@@ -267,6 +268,12 @@ describe("Testing /shows endpoint route", () => {
                         resp = await request(app)
                             .patch(`/shows/${shows[0].id}`)
                             .send({status: newStatus});
+                    });
+
+                    afterAll(async () => {
+                        // Undo any changes made by the test
+                        await db.sync({force: true});
+                        await seedShows();
                     });
 
                     test("succeeds", () => {

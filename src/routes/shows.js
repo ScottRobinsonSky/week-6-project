@@ -18,6 +18,11 @@ showRouter.get("/:showId", validateShowId, async (req, resp) => {
     resp.json(req.show.toJSON());
 });
 
+showRouter.delete("/:showId", validateShowId, async (req, resp) => {
+    await req.show.destroy();
+    resp.json(req.show);
+});
+
 showRouter.patch(
     "/:showId",
     validateShowId,

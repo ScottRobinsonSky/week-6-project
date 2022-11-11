@@ -8,6 +8,10 @@ app.use(express.json());
 app.use("/shows", showRouter);
 app.use("/users", userRouter);
 
+app.get("/seed", async (_, resp) => {
+    await seed();
+    resp.sendStatus(200);
+});
 
 if (require.main === module) {
     app.listen(3000, async () => {

@@ -10,11 +10,12 @@ async function validateShowGenre(req, resp, next) {
 }
 
 async function validateShowId(req, resp, next) {
-    if (isNaN(+req.params.showId)) {
+    const showId = req.params.showId;
+    if (isNaN(+showId) || !Number.isInteger(+showId)) {
         resp.status(400).send("Show id must be a valid integer.");
         return;
     }
-    req.show = await Show.findByPk(+req.params.showId);
+    req.show = await Show.findByPk(+showId);
     if (req.show === null) {
         resp.status(404).send("Show Not Found");
         return;
@@ -23,11 +24,12 @@ async function validateShowId(req, resp, next) {
 }
 
 async function validateUserId(req, resp, next) {
-    if (isNaN(+req.params.userId)) {
+    const userId = req.params.userId;
+    if (isNaN(+userId) || !Number.isInteger(+userId)) {
         resp.status(400).send("User id must be a valid integer.");
         return;
     }
-    req.user = await User.findByPk(+req.params.userId);
+    req.user = await User.findByPk(+userId);
     if (req.user === null) {
         resp.status(404).send("User Not Found");
         return;
